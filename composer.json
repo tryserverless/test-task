@@ -2,9 +2,10 @@
   "name": "tryserverless/test-task",
   "description": "Test task",
   "autoload": {
-    "classmap": [
-      "api/"
-    ]
+    "psr-4": {
+      "tryserverless\\Api\\": "api/",
+      "tryserverless\\Tests\\Unit\\Api": "tests/"
+    }
   },
   "require-dev": {
     "phpunit/phpunit": "^9"
