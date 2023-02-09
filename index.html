@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bottle Pack Calculator</title>
+  <style>
+    .container {
+      width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    label {
+      display: inline-block;
+      width: 125px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    input[type="text"] {
+      width: 60px;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+    input[type="button"] {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Bottle Pack Calculator</h1>
+    <form>
+      <label for="bottles">Number of Bottles:</label>
+      <input type="text" class="bottles">
+      <input type="button" value="Calculate" onclick="calculate()">
+    </form>
+    <div class="result">
+      <p>Result:</p>
+      <p class="result"></p>
+    </div>
+  </div>
+  <script>
+    function calculate() {
+      let bottles = document.getElementsByClassName('bottles')[0].value;
+      let packSizes = [12, 6, 3];
+      let params = '';
+      for (const packSize in packSizes) {
+        params += 'packSizes[]=' + packSizes[packSize] + '&';
+      }
+      params += 'bottles=' + bottles;
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://test-task-eta.vercel.app/api', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          let result = JSON.parse(xhr.responseText);
+          let output = '';
+          for (const packSize in result) {
+            output += packSize + '-pack: ' + result[packSize] + '<br>';
+          }
+          document.getElementsByClassName('result')[0].innerHTML = output;
+        }
+      };
+      xhr.send(params);
+    }
+  </script>
+</body>
+
+</html>
