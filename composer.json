@@ -4,7 +4,7 @@
   "autoload": {
     "psr-4": {
       "tryserverless\\Api\\": "api/",
-      "tryserverless\\Tests\\Unit\\Api": "tests/"
+      "tryserverless\\Tests\\Unit\\Api\\": "tests/"
     }
   },
   "require-dev": {
